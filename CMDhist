@@ -1,0 +1,149 @@
+CMD History from First Server:
+
+lsblk
+    2  sudo mkfs -t nfs4 /dev/xvdb
+    3  sudo mkfs.xfs /dev/xvdb
+    4  sudo mkdir /data
+    5  sudo mount /dev/xvdb /data
+    6  df -h
+    7  sudo bash -c 'echo "/dev/xvdb /data ext4 defaults,nofail 0 2" >> /etc/fstab'
+    8  cat /etc/fstab
+    9  ls
+   10  cd /data
+   11  touch file1 file2 file3 file4
+   12  sudo touch file1 file2 file3 file4
+   13  sudo echo "This is the content of file 1. Created on $(date)" > file1
+   14  ls -ld /data
+   15  sudo chown ec2-user:ec2-user /data
+   16  sudo echo "This is the content of file 1. Created on $(date)" > file1
+   17  ls
+   18  sudo bash -c 'echo "This is the content of file 1. Created on $(date)" > file1'
+   19  sudo bash -c 'echo "Welcome to file 2. This file was created in the data volume." > file2'
+   20  sudo bash -c 'echo "File 3 contains this sample text. The EBS volume is working correctly." > file3'
+   21  sudo bash -c 'echo "This is file 4. Your mounted volume is functioning properly." > file4'
+   22  ls -l /data
+   23  cat /data/file1
+   24  cat /data/file2
+   25  history
+   26  cd ..
+   27  ls
+   28  cd home/
+   29  ls
+   30  cd ec2-user/
+   31  ls
+   32  cd /home/
+   33  ls
+   34  cd ec2-user/
+   35  ls
+   36  cd /data
+   37  ls
+   38  ls -l /data
+   39  df -h
+   40  df -h |grep efs
+   41  cd ~
+   42  ls /mnt/efs
+   43  sudo mkdir -p /mnt/efs
+   44  sudo mount -t efs fs-0f680c17e4a4aae87:/ /mnt/efs
+   45  sudo yum install -y amazon-efs-utils
+   46  sudo mount -t efs fs-0f680c17e4a4aae87:/ /mnt/efs
+   47  echo "fs-0f680c17e4a4aae87:/ /mnt/efs efs defaults,_netdev 0 0" | sudo tee -a /etc/fstab
+   48  sudo rm -rf /data
+   49  sudo ln -s /mnt/efs /data
+   50  ls -l /data
+   51  ls /mnt/efs
+
+CMD History from 2nd Server:
+
+1  lsblk
+    2  sudo mkfs.xfs /dev/xvdb
+    3  sudo mkdir /data
+    4  sudo mount /dev/xvdb /data
+    5  df -h
+    6  sudo bash -c 'echo "/dev/xvdb /data ext4 defaults,nofail 0 2" >> /etc/fstab'
+    7  cat /etc/fstab
+    8  cd /data
+    9  sudo chown ec2-user:ec2-user /data
+   10  sudo touch file1 file2 file3 file4
+   11  sudo bash -c 'echo "This is the content of file 1. Created on $(date)" > file1'
+   12  sudo bash -c 'echo "Welcome to file 2. This file was created in the data volume." > file2'
+   13  sudo bash -c 'echo "Welcome to file 3. This file was created for you in the data volume." > file3'
+   14  sudo bash -c 'echo "This is file 1. I know thats obvious this was Created on $(date)" > file4'
+   15  ls -l /data
+   16  cat /data/file1
+   17  cat /data/file2
+   18  cat /data/file3
+   19  cat /data/file4
+   20  history
+   21  sudo nano switch-to-efs.sh
+   22  cat switch-to-efs.sh 
+   23  sudo chmod +x switch-to-efs.sh 
+   24  sudo ./switch-to-efs.sh 
+   25  sudo umount sudo rm -rf /data
+   26  sudo ln -s /mnt/efs /data
+   27  cd /data
+   28  ls
+   29  lsblk
+   30  df -h 
+   31  ls
+   32  sudo cp -r /data/* /mnt/efs/
+   33  sudo rm -rf /data/*
+   34  cd ..
+   35  sudo rm -rf /data
+   36  sudo umount /data
+   37  cd ~
+   38  sudo umount /data
+   39  lsof  +D /data
+   40  sudo fuser -vm /data
+   41  sudo fuser -kvm /data
+   42  sudo umount /data
+   43  sudo mkdir -p /mnt/efs
+   44  sudo mount -t efs fs-0f680c17e4a4aae87:/ /mnt/efs
+   45  ls /mnt/efs
+
+CMD History from 3rd Server
+
+1  sudo nano setup-ebs-volume.sh
+    2  sudo chmod +x setup-ebs-volume.sh
+    3  sudo ./setup-ebs-volume.sh 
+    4  ls -l /data
+    5  cat /data/file1
+    6  sudo yum install -y amazon-efs-utils
+    7  sudo mkdir -p /mnt/efs
+    8  sudo mount -t efs fs-0f680c17e4a4aae87:/ /mnt/efs
+    9  echo "fs-0f680c17e4a4aae87:/ /mnt/efs efs defaults,_netdev 0 0" | sudo tee -a /etc/fstab
+   10  sudo cp -r /data/* /mnt/efs/
+   11  sudo rm -rf /data/*
+   12  sudo umount /data
+   13  sudo rm -rf /data
+   14  sudo ln -s /mnt/efs /data
+   15  history
+   16  sudo nano switch-to-efs.sh
+   17  sudo chmod +x switch-to-efs.sh 
+   18  sudo ./switch-to-efs.sh 
+   19  lsblk
+   20  ls -l /data
+   21  cd /data
+   22  ls
+   23  cd ..
+   24  ls
+   25  cd /home
+   26  ls
+   27  cd ec2-user/
+   28  ls
+   29  cat switch-to-efs.sh 
+   30  nano switch-to-efs.sh 
+   31  history
+   32  df -h
+   33  cd /data 
+   34  ls
+   35  df-h | grep /data
+   36  df -h | grep /data
+   37  mount | grepp /data
+   38  mount | grep /data
+   39  ls -l
+   40  sudo mkdir -p /mnt/efs
+   41  sudo mount -t efs fs-0f680c17e4a4aae87:/ /mnt/efs
+   42  touch /mnt/efs/test.txt
+   43  sudo touch /mnt/efs/test.txt
+   44  ls /mnt/efs
+   45  cat switch-to-efs.sh 
